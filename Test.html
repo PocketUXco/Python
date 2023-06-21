@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Figma Preview</title>
+  <style>
+    /* Add your custom styles here */
+  </style>
+</head>
+<body>
+  <h1>Figma Preview</h1>
+  <input type="text" id="figmaLinkInput" placeholder="Paste Figma link here">
+  <button id="previewButton">Preview</button>
+  <div id="previewArea"></div>
+
+  <script>
+    const previewButton = document.getElementById('previewButton');
+    const figmaLinkInput = document.getElementById('figmaLinkInput');
+    const previewArea = document.getElementById('previewArea');
+
+    previewButton.addEventListener('click', () => {
+      const figmaLink = figmaLinkInput.value;
+      const figmaFileId = extractFigmaFileId(figmaLink);
+      
+      if (figmaFileId) {
+        fetchFigmaData(figmaFileId)
+          .then(({ html, css, js }) => {
+            renderPreview(html, css, js);
+          })
+          .catch((error) => {
+            console.error('Failed to fetch Figma data:', error);
+          });
+      } else {
+        console.error('Invalid Figma link');
+      }
+    });
+
+    function extractFigmaFileId(figmaLink) {
+      // Implement your logic to extract the Figma file ID from the link
+      // Return the file ID or null if extraction fails
+    }
+
+    function fetchFigmaData(fileId) {
+      const apiUrl = `https://api.figma.com/v1/files/${fileId}`;
+      // Make an HTTP request to the Figma API and retrieve the necessary data
+      // Return a Promise that resolves with the HTML, CSS, and JS code
+    }
+
+    function renderPreview(html, css, js) {
+      previewArea.innerHTML = html;
+      const styleTag = document.createElement('style');
+      styleTag.textContent = css;
+      document.head.appendChild(styleTag);
+      const scriptTag = document.createElement('script');
+      scriptTag.textContent = js;
+      document.body.appendChild(scriptTag);
+    }
+  </script>
+</body>
+</html>
